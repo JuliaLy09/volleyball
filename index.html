@@ -1,9 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>This is the title of the webpage!</title>
-  </head>
-  <body>
-    <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>
-  </body>
+<head>
+<title>METANIT.COM</title>
+<meta charset="utf-8" />
+</head>
+<body>
+<h2>Список пользователей</h2>
+<?php
+$conn = new mysqli("31.31.196.48", "u1817694_helper", "HDHCdhasd65q3%$#%awdgD", "u1817694_default");
+if($conn->connect_error){
+    die("Ошибка: " . $conn->connect_error);
+}
+$sql = "SELECT * FROM name_id";
+if($result = $conn->query($sql)){
+    $rowsCount = $result->num_rows; // количество полученных строк
+    echo "<p>Получено объектов: $rowsCount</p>";
+    echo "<table><tr><th>Имя</th><th>ID</th></tr>";
+    foreach($result as $row){
+        echo "<tr>";
+            echo "<td>" . $row["name"] . "</td>";
+            echo "<td>" . $row["id"] . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+    $result->free();
+} else{
+    echo "Ошибка: " . $conn->error;
+}
+$conn->close();
+?>
+</body>
 </html>
